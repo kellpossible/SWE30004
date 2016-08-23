@@ -1,0 +1,4 @@
+__pycache__
+*.pyc
+issues_database.json
+.~lock*
