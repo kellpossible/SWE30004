@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %}History{% endblock %}
+{% block content %}
+<h2>History</h2>
+
+<table class="table">
+  <tr>
+    <th>Timestamp</th>
+    <th>Person Name</th>
+    <th>Date of Birth</th>
+    <th>Age (in days)</th>
+  </tr>
+  {% for iput in inputs %}
+  <tr>
+    <td>{{ iput.timestamp }}</td>
+    <td>{{ iput.person_name }}</td>
+    <td>{{ iput.date_of_birth }}</td>
+    <td>{{ iput.calculate_earth_age_days() }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

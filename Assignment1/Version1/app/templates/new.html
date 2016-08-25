@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block title %}New{% endblock %}
+{% block content %}
+<h2>Alive Calculator</h2>
+
+<form method="POST" action="/new">
+	{{ form.csrf_token }}
+	{{ form.person_name.label }} {{ form.person_name(size=20) }}
+	{% for error in form.person_name.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+  {% endfor %}<br>
+	{{ form.date_of_birth.label }} {{ form.date_of_birth(size=20) }}
+	{% for error in form.date_of_birth.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+  {% endfor %}<br>
+	<input type="submit" value="calculate">
+</form>
+{% endblock %}
