@@ -5,7 +5,15 @@ from flask import url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 from app.forms import AliveCalculatorForm
 from app.models import Input, db
+from flask.ext.navigation import Navigation
 
+nav = Navigation(app)
+nav.Bar('top',
+        [
+          nav.Item('Home', 'index'),
+          nav.Item('New Calculation', 'new'),
+          nav.Item('History', 'history')
+        ])
 
 @app.route("/")
 @app.route("/index")
@@ -13,7 +21,7 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/show/<id>/")
+@app.route("/show/<int:id>/")
 def show(id):
     iput = Input.query.get_or_404(id)
     return render_template("show.html", iput=iput)

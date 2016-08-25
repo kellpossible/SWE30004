@@ -1,19 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	{% block head %}
-	<title>{% block title %}{% endblock %}</title>
-	{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  {% block head %}
+  <title>{% block title %}{% endblock %}</title>
+  {% endblock %}
 
-	<link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
-	<link rel="stylesheet" href="/static/css/tether.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="/static/css/tether.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="/static/css/app.css" type="text/css" media="screen" title="no title" charset="utf-8">
 </head>
 <body>
-<div id="content">
-	{% with messages = get_flashed_messages() %}
+  <nav class="navbar navbar-light bg-faded">
+  <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2" aria-controls="exCollapsingNavbar2" aria-expanded="false" aria-label="Toggle navigation">
+    &#9776;
+  </button>
+  <div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar2">
+    <a class="navbar-brand" href="/">Assignment 1</a>
+    <ul class="nav navbar-nav">
+      {% for item in nav.top %}
+      <li class="nav-item {{ 'active' if item.is_active else '' }}">
+        <a class="nav-link" href="{{ item.url }}">{{ item.label }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</nav>
+<div id="content" class="container">
+  {% with messages = get_flashed_messages() %}
     {% if messages %}
       <ul>
       {% for message in messages %}
@@ -22,14 +38,16 @@
       </ul>
     {% endif %}
   {% endwith %}
-	{% block content %}{% endblock %}
+  {% block content %}{% endblock %}
 </div>
-<div id="footer">
-	&copy; Copyright 2016 by Luke Frisken
-</div>
+<footer id="footer" class="footer">
+  <div class="container">
+    <p class="text-muted">&copy; Copyright 2016 by Luke Frisken</p>
+  </div>
+</footer>
 
-<script src="/static/js/jquery-1.12.3.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="/static/js/tether.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="/static/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
