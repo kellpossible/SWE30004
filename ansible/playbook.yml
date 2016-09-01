@@ -1,0 +1,47 @@
+---
+- hosts: all
+  vars_prompt:
+    - name: "githubuser"
+      prompt: "Enter your github username"
+      private: no
+      default: "{{ lookup('env', 'GITHUB_USER') }}"
+    - name: "githubpassword"
+      prompt: "Enter your github password or auth token"
+      private: yes
+      default: "{{ lookup('env', 'GITHUB_PASSWORD') }}"
+  tasks:
+    - block:
+      - name: install system dependencies
+        apt: name={{item}}
+        with_items:
+          - git
+          - python3
+          - python3-pip
+          - supervisor
+      - name: install virtualenv
+        pip: name=virtualenv executable=pip3
+      - name: create app user
+        user: name=app
+      - name: create app folder
+        file: path=/app state=directory mode=0755 owner=app group=app
+
+      become: yes
+
+    - block:
+      - name: downloading app source
+        git: repo=https://{{ githubuser }}:{{ githubpassword }}@github.com/kellpossible/SWE30004.git dest=/app
+      - name: install app dependencies
+        pip: requirements=/app/requirements.txt virtualenv=/app/.virtualenv
+
+      become: yes
+      become_user: app
+
+    - block:
+      - name: setup supervsord
+        template: src=templates/supervisor_swe30004.conf dest=/etc/supervisor/conf.d/swe30004.conf
+      - name: install swe30004 service
+        supervisorctl: name=swe30004 state=present
+      - name: restart app
+        supervisorctl: name=swe30004 state=restarted
+
+      become: yes
