@@ -12,6 +12,7 @@ class Config(object):
 
 class ProductionConfig(Config):
     DEBUG = False
+    PORT = os.environ['PORT']
 
 
 class StagingConfig(Config):
