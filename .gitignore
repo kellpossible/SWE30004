@@ -4,3 +4,4 @@ __pycache__
 .virtualenv
 .vagrant
 ansible/*.retry
+.env
