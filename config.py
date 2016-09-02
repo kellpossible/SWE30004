@@ -12,6 +12,7 @@ class Config(object):
 
 class ProductionConfig(Config):
     DEBUG = False
+    SERVER_NAME = '0.0.0.0:80'
 
 
 class StagingConfig(Config):
@@ -22,6 +23,7 @@ class StagingConfig(Config):
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
+    SERVER_NAME = '0.0.0.0:2227'
 
 
 class TestingConfig(Config):

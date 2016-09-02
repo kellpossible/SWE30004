@@ -5,3 +5,4 @@ __pycache__
 .vagrant
 ansible/*.retry
 .env
+*.swp
