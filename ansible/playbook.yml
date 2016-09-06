@@ -9,8 +9,14 @@
       prompt: "Enter your github password or auth token"
       private: yes
       default: "{{ lookup('env', 'GITHUB_PASSWORD') }}"
+  vars:
+    dbname: swe30004
+    dbuser: swe30004
+    dbpass: swe30004
   tasks:
     - block:
+      - name: ensure apt cache is up to date
+        apt: update_cache=yes
       - name: install system dependencies
         apt: name={{item}}
         with_items:
@@ -18,6 +24,14 @@
           - python3
           - python3-pip
           - supervisor
+          - postgresql
+          - libpq-dev
+          - python-psycopg2
+          - nginx
+      - name: setup nginx
+        template: src=templates/nginx.conf dest=/etc/nginx/nginx.conf
+      - name: reload nginx
+        service: name=nginx state=reloaded
       - name: install virtualenv
         pip: name=virtualenv executable=pip3
       - name: create app user
@@ -28,18 +42,40 @@
       become: yes
 
     - block:
+      - name: ensure database is created
+        postgresql_db: name={{dbname}}
+
+      - name: ensure user has access to database
+        postgresql_user: db={{dbname}} name={{dbuser}} password={{dbpass}} priv=ALL
+
+      - name: ensure user does not have unnecessary privilege
+        postgresql_user: name={{dbuser}} role_attr_flags=NOSUPERUSER,NOCREATEDB
+
+      - name: ensure no other user can access the database
+        postgresql_privs: db={{dbname}} role=PUBLIC type=database priv=ALL state=absent
+
+      become: yes
+      become_user: postgres
+
+    - block:
       - name: downloading app source
-        git: repo=https://{{ githubuser }}:{{ githubpassword }}@github.com/kellpossible/SWE30004.git dest=/app
+        shell: cp -R /vagrant/* /app
+        #git: repo=https://{{ githubuser }}:{{ githubpassword }}@github.com/kellpossible/SWE30004.git dest=/app
       - name: install app dependencies
         pip: requirements=/app/requirements.txt virtualenv=/app/.virtualenv
-
+      - name: migrate database
+        shell: APP_SETTINGS=config.ProductionConfig DATABASE_URI=postgres://{{dbuser}}:{{dbpass}}@localhost/{{dbname}} ./.virtualenv/bin/python manage.py db upgrade
+        args:
+          chdir: /app
       become: yes
       become_user: app
 
     - block:
-      - name: setup supervsord
+      - name: install swe30004 service config
         template: src=templates/supervisor_swe30004.conf dest=/etc/supervisor/conf.d/swe30004.conf
-      - name: install swe30004 service
+      - name: ensure supervisor is started
+        service: name=supervisor state=started
+      - name: reload swe30004 service config
         supervisorctl: name=swe30004 state=present
       - name: restart app
         supervisorctl: name=swe30004 state=restarted
