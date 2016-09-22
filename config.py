@@ -12,7 +12,7 @@ class Config(object):
 
 class ProductionConfig(Config):
     DEBUG = False
-    SERVER_NAME = "{0}:{1}".format('0.0.0.0', int(os.environ.get("PORT",80)))
+    # SERVER_NAME = "{0}:{1}".format('0.0.0.0', int(os.environ.get("PORT",2227)))
 
 
 class StagingConfig(Config):
@@ -23,7 +23,6 @@ class StagingConfig(Config):
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
-    SERVER_NAME = '127.0.0.1:2227'
 
 
 class TestingConfig(Config):
