@@ -12,7 +12,7 @@ class Config(object):
 
 class ProductionConfig(Config):
     DEBUG = False
-    SERVER_NAME = os.environ('SERVER_NAME')
+    SERVER_NAME = os.environ['SERVER_NAME']
 
 
 class StagingConfig(Config):
