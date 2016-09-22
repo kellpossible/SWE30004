@@ -12,7 +12,7 @@ class Config(object):
 
 class ProductionConfig(Config):
     DEBUG = False
-    SERVER_NAME = "{0}:{1}".format(os.environ['SERVER_NAME'], int(os.environ.get("PORT",80)))
+    SERVER_NAME = "{0}:{1}".format('0.0.0.0', int(os.environ.get("PORT",80)))
 
 
 class StagingConfig(Config):
