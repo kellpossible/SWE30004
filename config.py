@@ -12,7 +12,7 @@ class Config(object):
 
 class ProductionConfig(Config):
     DEBUG = False
-    SERVER_NAME = '127.0.0.1:5000'
+    SERVER_NAME = os.environ('SERVER_NAME')
 
 
 class StagingConfig(Config):
@@ -23,7 +23,7 @@ class StagingConfig(Config):
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
-    SERVER_NAME = '0.0.0.0:2227'
+    SERVER_NAME = '127.0.0.1:2227'
 
 
 class TestingConfig(Config):
