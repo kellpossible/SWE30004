@@ -6,5 +6,5 @@ db.create_all()
 
 if __name__ == "__main__":
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.run(port=int(os.environ.get("PORT", 2227)), threaded=True)
+    app.run(threaded=True)
 
