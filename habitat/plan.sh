@@ -29,11 +29,8 @@ do_unpack() {
 
 do_build() {
 	pip install --upgrade pip
-	pip install virtualenv
 	pushd $PLAN_CONTEXT/../
-	virtualenv ${pkg_prefix}
-	source ${pkg_prefix}/bin/activate
-	pip install -r $PLAN_CONTEXT/../requirements.txt
+	pip install --target=./pip/ -r requirements.txt
 	popd
 
 	# The mytutorialapp source code is in a relative directory, so you must copy the
@@ -52,6 +49,7 @@ do_install() {
 	cp manage.py ${pkg_prefix}
 	cp config.py ${pkg_prefix}
 
+	cp -vr pip/ ${pkg_prefix}
 	cp -vr migrations/ ${pkg_prefix}
 	cp -vr app/ ${pkg_prefix}
 }
