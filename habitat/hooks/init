@@ -3,13 +3,12 @@
 
 export FLASK_APPLICATION_HOME="{{pkg.path}}"
 export FLASK_APPLICATION_DATA="{{pkg.svc_data_path}}"
+export FLASK_APPLICATION_VAR="{{pkg.svc_var_path}}"
 
-echo "removing previous version deployed at ${FLASK_APPLICATION_DATA}"
-rm -rf ${FLASK_APPLICATION_DATA}/*
-
-echo "deploying new version from ${FLASK_APPLICATION_HOME} to ${FLASK_APPLICATION_DATA}"
-cp -a ${FLASK_APPLICATION_HOME}/* ${FLASK_APPLICATION_DATA}
-
-echo "finished deploying to ${FLASK_APPLICATION_DATA}"
+echo "linking executables from ${FLASK_APPLICATION_HOME} to ${FLASK_APPLICATION_VAR}"
+ln -sf ${FLASK_APPLICATION_HOME}/main.py ${FLASK_APPLICATION_VAR}
+ln -sf ${FLASK_APPLICATION_HOME}/manage.py ${FLASK_APPLICATION_VAR}
+ln -sf ${FLASK_APPLICATION_HOME}/config.py ${FLASK_APPLICATION_VAR}
+ln -sf ${FLASK_APPLICATION_HOME}/app ${FLASK_APPLICATION_VAR}/app
 
 chown -R hab:hab ${FLASK_APPLICATION_DATA}

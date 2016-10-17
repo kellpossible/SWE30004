@@ -3,13 +3,20 @@
 
 export FLASK_APPLICATION_HOME="{{pkg.path}}"
 export FLASK_APPLICATION_DATA="{{pkg.svc_data_path}}"
+export FLASK_APPLICATION_VAR="{{pkg.svc_var_path}}"
 export PATH="$PATH:${FLASK_APPLICATION_DATA}"
 export LD_LIBRARY_PATH="$(hab pkg path core/gcc-libs)/lib"
-
-
-cd ${FLASK_APPLICATION_DATA}
+export DATABASE_URL="sqlite:///${FLASK_APPLICATION_DATA}/data.db"
 
 export PORT={{cfg.port}}
 export APP_SETTINGS={{cfg.config_class}}
+
+cd ${FLASK_APPLICATION_VAR}
+
+echo "Starting main.py with the following settings"
+echo "PORT: ${PORT}"
+echo "DATABASE_URL: ${DATABASE_URL}"
+echo "APP_SETTINGS: ${APP_SETTINGS}"
+echo "from path: ${FLASK_APPLICATION_VAR}"
 
 exec python main.py 2>&1
