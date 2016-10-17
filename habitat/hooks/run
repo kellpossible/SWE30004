@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+
+export FLASK_APPLICATION_HOME="{{pkg.path}}"
+export FLASK_APPLICATION_DATA="{{pkg.svc_data_path}}"
+export PATH="$PATH:${FLASK_APPLICATION_DATA}"
+export LD_LIBRARY_PATH="$(hab pkg path core/gcc-libs)/lib"
+
+
+cd ${FLASK_APPLICATION_DATA}
+
+export PORT={{cfg.port}}
+export APP_SETTINGS={{cfg.config_class}}
+
+exec python main.py 2>&1

@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+
+export FLASK_APPLICATION_HOME="{{pkg.path}}"
+export FLASK_APPLICATION_DATA="{{pkg.svc_data_path}}"
+
+echo "removing previous version deployed at ${FLASK_APPLICATION_DATA}"
+rm -rf ${FLASK_APPLICATION_DATA}/*
+
+echo "deploying new version from ${FLASK_APPLICATION_HOME} to ${FLASK_APPLICATION_DATA}"
+cp -a ${FLASK_APPLICATION_HOME}/* ${FLASK_APPLICATION_DATA}
+
+echo "finished deploying to ${FLASK_APPLICATION_DATA}"
+
+chown -R hab:hab ${FLASK_APPLICATION_DATA}

@@ -1,0 +1,5 @@
+# class used for application config
+config_class = "config.DevelopmentConfig"
+
+# port number that the application is listening to
+port = 8090
