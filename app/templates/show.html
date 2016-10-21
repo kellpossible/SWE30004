@@ -5,7 +5,7 @@
 {% if iput.person_name != None  %}
 Name: {{ iput.person_name }}
 {% else %}
-Full Name: {{ iput.first_name + " " + iput.last_name }}
+First Name: {{ iput.first_name }} Last Name: {{iput.last_name }}
 {% endif %}</h3><br></br>
 <h3>Calculated Age (earth days): {{ iput.calculate_earth_age_days() }} days old</h3><br></br>
 <h3>Calculated Age (martian days): {{ iput.calculate_martian_age_days() }} days old</h3>
