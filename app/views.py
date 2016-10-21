@@ -31,7 +31,7 @@ def show(id):
 def new():
     form = AliveCalculatorForm()
     if form.validate_on_submit():
-        iput = Input(form.person_name.data, form.date_of_birth.data)
+        iput = Input(form.first_name.data, form.last_name.data, form.date_of_birth.data)
         db.session.add(iput)
         db.session.commit()
         return redirect("/show/{0}".format(iput.id))

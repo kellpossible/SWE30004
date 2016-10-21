@@ -13,7 +13,7 @@
   {% for iput in inputs %}
   <tr>
     <td>{{ iput.timestamp }}</td>
-    <td>{{ iput.person_name }}</td>
+    <td>{{ iput.full_name() }}</td>
     <td>{{ iput.date_of_birth }}</td>
     <td>{{ iput.calculate_earth_age_days() }}</td>
   </tr>
