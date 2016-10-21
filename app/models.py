@@ -28,6 +28,17 @@ class Input(db.Model):
             return self.first_name + " " + self.last_name
         else:
             return self.person_name
+    
+    def calculate_martian_age_days(self):
+        mars_earth_day_ratio = 1.02855
+        today = datetime.datetime.now()
+        dob = datetime.datetime.combine(self.date_of_birth,
+                                        datetime.datetime.min.time())
+        diff = today - dob
+        mars_day_seconds = diff.total_seconds() * mars_earth_day_ratio
+        mars_day = datetime.timedelta(seconds=mars_day_seconds)
+        return mars_day.days
+
 
     def calculate_earth_age_days(self):
         today = datetime.datetime.now()

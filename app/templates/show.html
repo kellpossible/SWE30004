@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block title %}History{% endblock %}
 {% block content %}
-<h2>Calculated Age: {{ iput.calculate_earth_age_days() }} days old</h2>
+<h2>Calculated Age (earth days): {{ iput.calculate_earth_age_days() }} days old</h2><br></br>
+<h2>Calculated Age (martian days): {{ iput.calculate_martian_age_days() }} days old</h2>
 {% endblock %}
