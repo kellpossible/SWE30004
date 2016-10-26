@@ -8,14 +8,18 @@
     <th>Timestamp</th>
     <th>Person Name</th>
     <th>Date of Birth</th>
-    <th>Age (in days)</th>
+    <th>Age (in earth days)</th>
+    <th>Age (in martian days)</th>
+    <th></th>
   </tr>
   {% for iput in inputs %}
   <tr>
     <td>{{ iput.timestamp }}</td>
-    <td>{{ iput.person_name }}</td>
+    <td>{{ iput.full_name() }}</td>
     <td>{{ iput.date_of_birth }}</td>
     <td>{{ iput.calculate_earth_age_days() }}</td>
+    <td>{{ iput.calculate_martian_age_days() }}</td>
+    <td><a href="/show/{{ iput.id }}">show</a></td>
   </tr>
   {% endfor %}
 </table>

@@ -5,8 +5,12 @@
 
 <form method="POST" action="/new">
 	{{ form.csrf_token }}
-	{{ form.person_name.label }} {{ form.person_name(size=20) }}
-	{% for error in form.person_name.errors %}
+	{{ form.first_name.label }} {{ form.first_name(ssze=20) }}
+	{% for error in form.first_name.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+  {% endfor %}<br>
+	{{ form.last_name.label }} {{ form.last_name(ssze=20) }}
+	{% for error in form.last_name.errors %}
     <span style="color: red;">[{{ error }}]</span>
   {% endfor %}<br>
 	{{ form.date_of_birth.label }} {{ form.date_of_birth(size=20) }}

@@ -5,6 +5,7 @@ from wtforms.validators import DataRequired
 
 
 class AliveCalculatorForm(FlaskForm):
-    person_name = StringField('Your Name', validators=[DataRequired()])
+    first_name = StringField('First Name', validators=[DataRequired()])
+    last_name = StringField('Last Name', validators=[DataRequired()])
     date_of_birth = DateField('Date of Birth', format='%Y-%m-%d',
                               validators=[DataRequired()])
